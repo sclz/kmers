@@ -26,7 +26,7 @@ for file in "${input_folder}"/*.fastq "${input_folder}"/*.fastq.gz; do
   # Build the output filename with the "_kmers" extension
   out="${output_folder}/${filename_without_extension}_kmers"
   # Execute kmc inside the loop for each input file
-  ${kmc_docker} kmc -k${kmer} -ci1 "${sample}" "${out}" "${tmp}" 
+  ${kmc_docker} kmc -k${kmer} -ci1 -cs999999 "${sample}" "${out}" "${tmp}" 
   # Execute kmc_tools inside the loop for each output file
   ${kmc_docker} kmc_tools transform "${out}" dump "${out}.txt"
 done
