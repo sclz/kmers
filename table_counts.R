@@ -1,8 +1,14 @@
 # Carica la libreria tidyr per la manipolazione dei dati
 library(tidyr)
 
-# Specifica la directory in cui si trovano i tuoi file
-directory <- "percorso/della/directory"
+# Controlla se è stato fornito un argomento per la directory da linea di comando
+args <- commandArgs(trailingOnly = TRUE)
+if (length(args) == 0) {
+  stop("Devi specificare la directory come argomento da linea di comando.")
+}
+
+# Prendi la directory dall'argomento della linea di comando
+directory <- args[1]
 
 # Ottieni la lista dei file nella directory con estensione .txt
 file_list <- list.files(path = directory, pattern = "\\.txt$", full.names = TRUE)
