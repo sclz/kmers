@@ -50,7 +50,7 @@ Suppose you want to perform K-mer analysis with K=21 on the files in the "data_i
 - The results of the K-mer analysis will be available in text files in the output folder with the "_kmers.txt" extension.
 - Ensure that the script file has the correct execute permissions (`chmod +x script_kmer.sh`).
 
-# K-mer Count R Script Documentation
+# K-mer to table Script Documentation
 
 ## Introduction
 
