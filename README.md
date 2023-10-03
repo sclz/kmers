@@ -2,16 +2,16 @@
 
 ## Introduction
 
-The provided BASH script allows you to perform K-mer analysis on FastQ or compressed FastQ (.fastq or .fastq.gz) data files located in a specified folder. K-mer analysis is a common operation in bioinformatics used to count the occurrences of K-mers in genomic data.
+The provided BASH script allows you to perform K-mer analysis on BAM (.bam) data files located in a specified folder. K-mer analysis is a common operation in bioinformatics used to count the occurrences of K-mers in genomic data.
 
 ## Usage
 
 ```
-./script_kmer.sh <kmer> <input_folder> <output_folder> <temp_dir>
+./kmers_count.sh <kmer> <input_folder> <output_folder> <temp_dir>
 ```
 
 - `<kmer>`: The desired length of K-mers to count.
-- `<input_folder>`: The folder containing the FastQ or compressed FastQ files to be analyzed.
+- `<input_folder>`: The folder containing the BAM files to be analyzed.
 - `<output_folder>`: The folder where the analysis results will be saved.
 - `<temp_dir>`: A temporary directory used for internal processing.
 
@@ -23,16 +23,23 @@ The provided BASH script allows you to perform K-mer analysis on FastQ or compre
 ```
 docker pull quay.io/biocontainers/kmc:3.0.0--2
 ```
+- The bedtools Docker image must be downloaded and available. You can pull the image with the following command: 
+
+```
+docker pull quay.io/biocontainers/bedtools:2.31.0--h468198e_1    
+```
 
 ## Operation
 
 The script performs the following operations:
 
 1. Creates an output directory if it doesn't exist.
-2. Scans all `.fastq` and `.fastq.gz` files in the specified input folder.
+2. Scans all `bam` files in the specified input folder.
 3. For each input file:
    - Extracts the filename without extension.
+   - Constructs the fastq filename by adding ".fq" as extension.
    - Constructs the output filename by adding "_kmers" to the extension.
+   - Uses on the Docker container "bedtools" to convert bam files in fastq files.
    - Uses on the Docker container "kmc" to perform K-mer analysis with the specified K value.
    - Uses on the Docker container "kmc_tools" to transform the results into a text file.
 
@@ -41,16 +48,16 @@ The script performs the following operations:
 Suppose you want to perform K-mer analysis with K=21 on the files in the "data_input" folder and save the results in the "results" folder, using a temporary directory named "temp":
 
 ```
-./script_kmer.sh 21 data_input results temp
+./kmers_count.sh 21 data_input results temp
 ```
 
 ## Notes
 
-- Ensure that Docker is installed and configured correctly to run the "kmc" and "kmc_tools" commands.
+- Ensure that Docker is installed and configured correctly to run the "bedtools", "kmc" and "kmc_tools" commands.
 - The results of the K-mer analysis will be available in text files in the output folder with the "_kmers.txt" extension.
-- Ensure that the script file has the correct execute permissions (`chmod +x script_kmer.sh`).
+- Ensure that the script file has the correct execute permissions (`chmod +x kmers_count.sh`).
 
-# K-mer to table Script Documentation
+# K-mer Count R Script Documentation
 
 ## Introduction
 
